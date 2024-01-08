@@ -1,7 +1,5 @@
-"""Module for defining the EmailVerifierService class."""
-from typing import Optional, List, Dict
-
-from email_verifier import EmailVerifier
+"""Module for managing verification results."""
+from typing import List, Dict
 
 
 class VerificationResultManager(object):
@@ -40,24 +38,3 @@ class VerificationResultManager(object):
             self.verification_results.pop(index)
             return True
         return False
-
-
-class EmailVerifierService(object):
-    """Service for verifying and storing email verification results."""
-
-    def __init__(self, email_verifier_client: EmailVerifier) -> None:
-        """Initialize the EmailVerifierService instance."""
-        self.email_verifier_client: EmailVerifier = email_verifier_client
-        self.result_manager = VerificationResultManager()
-
-    def verify_and_store_email(self, email: str) -> bool:
-        """Verify the provided email and store the result."""
-        verification_result: Optional[Dict] = self.email_verifier_client.verify_email(email)
-        if verification_result:
-            self.result_manager.create_result(verification_result)
-            return True
-        return False
-
-    def get_results_manager(self) -> VerificationResultManager:
-        """Get the manager for verification results."""
-        return self.result_manager
